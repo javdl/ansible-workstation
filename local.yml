@@ -1,11 +1,254 @@
 - hosts: localhost
   become: true
-  tasks:
-  - name: Install htop
-    apt: name=htop
+  vars:
+    create_containers: 4
+    default_container_name: docker
+    default_container_image: ubuntu
+    default_container_command: sleep 1d
 
-  - name: Install mc
-    apt: name=mc
-   
-  - name: Install tmux
-    apt: name=tmux
+  tasks:
+  - name: add Wireguard repo
+    apt_repository: repo='ppa:wireguard/wireguard'
+
+  - name: Update apt cache
+    apt: update_cache=yes
+    
+  - name: Upgrade packages
+    apt: upgrade=dist
+
+  - name: Check if a reboot is required
+    register: reboot_required_file
+    stat: path=/var/run/reboot-required get_md5=no
+
+  - name: restart machine
+    become: yes
+    shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+    async: 1
+    poll: 0
+    ignore_errors: true
+    when: reboot_required_file.stat.exists == true
+
+  - name: "Install dependencies"
+    apt:
+      pkg:
+        - htop
+        - mc
+        - tmux
+        - wget
+        - unzip
+        - curl
+        - vim
+        - ufw
+        - xclip
+        - git
+        - apt-transport-https
+        - build-essential
+        - libssl-dev
+      state: present
+
+# https://github.com/Zeitwaechter/SSH-with-ed25519-curve25519-GNOME-KeyRing
+# Keychain to manage SSH keys
+# also add correct script to bashrc (included in dotfiles)
+  - name: Install keychain
+    apt: name=keychain
+
+  - name: Install wireguard
+    apt: name=wireguard
+  # sudo touch /etc/wireguard/.reload-module-on-update
+
+  - name: Install openssh-server
+    apt: name=openssh-server
+
+  - name: UFW - Allow SSH connections
+    ufw:
+      rule: allow
+      name: OpenSSH
+
+  - name: UFW - Deny all other incoming traffic by default
+    ufw:
+      state: enabled
+      policy: deny
+      direction: incoming
+
+# # SSH server, only install if you want to enable SSH access
+# sudo ufw allow 22
+# sudo systemctl enable ssh
+# sudo systemctl start ssh  
+
+  - name: Install snapd
+    apt: name=snapd
+
+  - name: Install flatpak
+    apt: name=flatpak
+# flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+# # Nodejs and NVM
+# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+# source ~/.profile
+# nvm install node
+# nvm use node
+# nvm install stable
+# nvm alias default stable
+# node -v
+# npm -v
+
+  - name: Install google-chrome-stable
+    apt: name=google-chrome-stable
+  
+  - name: Install emacs
+    apt: name=emacs
+  
+  - name: Install vim
+    apt: name=vim
+  
+  - name: Install typora
+    apt: name=typora
+
+  - name: "Install Gimp"
+    apt:
+      pkg:
+        - gimp 
+        - gimp-data
+        - gimp-plugin-registry
+        - gimp-data-extras
+      state: present
+
+  - name: "Install Python"
+    apt:
+      pkg:
+        # - python-software-properties 
+        - software-properties-common
+        - python
+        - python-dev
+        - python-pip
+        - libkrb5-dev
+      state: present
+
+  - name: "Install Archive tools"
+    apt:
+      pkg:
+        - unrar
+        - p7zip-full
+        - p7zip-rar
+      state: present
+
+  - name: Install erlang
+    apt: name=erlang
+
+  # Install "foo" and "bar" snap
+  - name: Install Snap Store
+    snap:
+      name:
+        - snap-store
+
+  - name: Install Golang
+    snap:
+      name:
+        - go
+      classic: yes
+
+  - name: Install VS Code
+    snap:
+      name:
+        - code
+      classic: yes
+
+  - name: Install Deps
+    snap:
+      name:
+        - sublime-text
+        - goland
+        - webstorm
+        - kubectl
+        - google-cloud-sdk
+      classic: yes
+
+# API clients
+  # - name: Install insomnia
+  #   apt: name=insomnia
+
+  - name: Install Postman
+    snap:
+      name:
+        - postman
+
+  - name: Install gitkraken
+    snap:
+      name:
+        - gitkraken
+
+  - name: Install terraform
+    snap:
+      name:
+        - terraform
+
+  - name: Install signal-desktop
+    snap:
+      name:
+        - signal-desktop
+
+  - name: Install spotify
+    snap:
+      name:
+        - spotify
+
+  # Install a snap with from a specific channel
+  - name: Install "Hugo" with option --channel=extended
+    snap:
+      name: hugo
+      channel: extended
+
+  - name: Install steam-installer
+    apt: name=steam-installer
+
+  - name: Ensure Calibre is installed at latest available version.
+    apt:
+      name: calibre
+      state: latest
+
+  - name: Install docker-compose
+    apt:
+      name: docker-compose
+      state: present
+      update_cache: yes
+    tags:
+      - docker
+
+  - name: Install aptitude using apt
+    apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+
+  - name: Install required system packages
+    apt: name={{ item }} state=latest update_cache=yes
+    loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+
+  - name: Add Docker GPG apt Key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Add Docker Repository
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+
+  - name: Update apt and install docker-ce
+    apt: update_cache=yes name=docker-ce state=latest
+
+  - name: Install Docker Module for Python
+    pip:
+      name: docker
+
+  # Pull image specified by variable default_image from the Docker Hub
+  - name: Pull default Docker image
+    docker_image:
+      name: "{{ default_container_image }}"
+      source: pull
+
+  # Creates the number of containers defined by the variable create_containers, using default values
+  - name: Create default containers
+    docker_container:
+      name: "{{ default_container_name }}{{ item }}"
+      image: "{{ default_container_image }}"
+      command: "{{ default_container_command }}"
+      state: present
+    with_sequence: count={{ create_containers }}
