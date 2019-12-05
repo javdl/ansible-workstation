@@ -141,8 +141,8 @@
       repo: deb https://typora.io/linux ./
       state: present
 
-  # - name: Install typora
-  #   apt: name=typora
+  - name: Install typora
+    apt: name=typora
 
   - name: "Install Gimp"
     apt:
