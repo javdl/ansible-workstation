@@ -113,7 +113,7 @@
     when: google_apt_exists.rc == 1
 
   - name: Install Google Chrome
-    apt: pkg=google-chrome-stable state=installed
+    apt: pkg=google-chrome-stable state=latest
   
   - name: Install emacs
     apt: name=emacs
