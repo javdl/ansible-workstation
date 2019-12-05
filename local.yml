@@ -197,10 +197,9 @@
   #   snap:
   #     name: hugo
   #     channel: extended
-  
+
   - name: Install Hugo static site generator
     apt: name=hugo
-    state: latest
 
   - name: Install steam-installer
     apt: name=steam-installer

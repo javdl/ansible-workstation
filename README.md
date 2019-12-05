@@ -2,7 +2,7 @@
 
 ## Install
 
-    sudo apt-get install software-properties-common
+    sudo apt-get install software-properties-common git
     sudo apt-add-repository ppa:ansible/ansible
     sudo apt-get update
     sudo apt-get install ansible
@@ -16,6 +16,13 @@ Run as sudo, we are changing the system.
 Test on localhost
 
     sudo ansible-playbook local.yml
+
+## Enable remote install on freshly installed machine
+
+    sudo apt install openssh-server
+    sudo ufw allow 22
+    sudo systemctl enable ssh
+    sudo systemctl start ssh
 
 ## Debs vs Snaps
 
