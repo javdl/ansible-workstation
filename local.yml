@@ -112,18 +112,18 @@
   #   apt: update_cache=yes
   #   when: google_apt_exists.rc == 1
   
-  # - name: Add Chrome GPG apt Key
-  #   apt_key:
-  #     url: https://dl-ssl.google.com/linux/linux_signing_key.pub
-  #     state: present
+  - name: Add Chrome GPG apt Key
+    apt_key:
+      url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+      state: present
 
-  # - name: Add Chrome repo
-  #   apt_repository:
-  #     repo: deb http://dl.google.com/linux/chrome/deb/ stable main
-  #     state: present
+  - name: Add Chrome repo
+    apt_repository:
+      repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+      state: present
 
-  # - name: Install Google Chrome
-  #   apt: pkg=google-chrome-stable state=latest
+  - name: Install Google Chrome
+    apt: pkg=google-chrome-stable state=latest
 
   - name: Install emacs
     apt: name=emacs
@@ -271,7 +271,7 @@
 
   - name: Add Docker Repository
     apt_repository:
-      repo: deb https://download.docker.com/linux/ubuntu eoan stable
+      repo: deb https://download.docker.com/linux/ubuntu bionic stable # Ubuntu 19.10 eoan is not yet in supported distro list. https://docs.docker.com/install/linux/docker-ce/ubuntu/
       state: present
 
   - name: Update apt and install docker-ce
