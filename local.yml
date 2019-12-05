@@ -60,6 +60,9 @@
   - name: Install openssh-server
     apt: name=openssh-server
 
+  - name: Install OpenVPN
+    apt: pkg=openvpn state=latest
+
   - name: UFW - Allow SSH connections
     ufw:
       rule: allow
