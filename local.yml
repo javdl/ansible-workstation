@@ -115,12 +115,24 @@
   - name: Install Google Chrome
     apt: pkg=google-chrome-stable state=latest
   
+
+
   - name: Install emacs
     apt: name=emacs
   
   - name: Install vim
     apt: name=vim
-  
+
+  - name: Add Typora GPG apt Key
+    apt_key:
+      url: https://typora.io/linux/public-key.asc
+      state: present
+
+  - name: Add Typora Repository
+    apt_repository:
+      repo: deb https://typora.io/linux
+      state: present
+
   - name: Install typora
     apt: name=typora
 
