@@ -5,7 +5,7 @@
     default_container_name: docker
     default_container_image: ubuntu
     default_container_command: sleep 1d
-    apt_file_chrome: /etc/apt/sources.list.d/google-chrome.list
+    # apt_file_chrome: /etc/apt/sources.list.d/google-chrome.list
 
   tasks:
   - name: add Wireguard repo
@@ -95,27 +95,37 @@
   
 # Google Chrome
 
-  - name: Does the Google apt file exist?
-    command: test -f {{apt_file_chrome}}
-    register: google_apt_exists
-    ignore_errors: True
+  # - name: Does the Google apt file exist?
+  #   command: test -f {{apt_file_chrome}}
+  #   register: google_apt_exists
+  #   ignore_errors: True
 
-  - name: Add Google Chrome key
-    shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-    when: google_apt_exists.rc == 1
+  # - name: Add Google Chrome key
+  #   shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+  #   when: google_apt_exists.rc == 1
 
-  - name: Add Google Chrome repo
-    copy: content="deb http://dl.google.com/linux/chrome/deb/ stable main" dest={{apt_file_chrome}} owner=root group=root mode=644
-    when: google_apt_exists.rc == 1
+  # - name: Add Google Chrome repo
+  #   copy: content="deb http://dl.google.com/linux/chrome/deb/ stable main" dest={{apt_file_chrome}} owner=root group=root mode=644
+  #   when: google_apt_exists.rc == 1
 
-  - name: Update apt cache
-    apt: update_cache=yes
-    when: google_apt_exists.rc == 1
+  # - name: Update apt cache
+  #   apt: update_cache=yes
+  #   when: google_apt_exists.rc == 1
+
+
+  
+  - name: Add Chrome GPG apt Key
+  apt_key:
+    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+    state: present  
+
+  - name: Add Chrome repo
+  - apt_repository:
+    repo: deb http://dl.google.com/linux/chrome/deb/ stable main
+    state: present
 
   - name: Install Google Chrome
     apt: pkg=google-chrome-stable state=latest
-  
-
 
   - name: Install emacs
     apt: name=emacs
@@ -123,18 +133,18 @@
   - name: Install vim
     apt: name=vim
 
-  - name: Add Typora GPG apt Key
-    apt_key:
-      url: https://typora.io/linux/public-key.asc
-      state: present
+  # - name: Add Typora GPG apt Key
+  #   apt_key:
+  #     url: https://typora.io/linux/public-key.asc
+  #     state: present
 
-  - name: Add Typora Repository
-    apt_repository:
-      repo: deb https://typora.io/linux
-      state: present
+  # - name: Add Typora Repository
+  #   apt_repository:
+  #     repo: deb https://typora.io/linux
+  #     state: present
 
-  - name: Install typora
-    apt: name=typora
+  # - name: Install typora
+  #   apt: name=typora
 
   - name: "Install Gimp"
     apt:
