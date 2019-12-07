@@ -32,6 +32,8 @@ firebase-tools
 
 sudo apt install nfs-common
 
+insync
+
 
 ## Debs vs Snaps
 
