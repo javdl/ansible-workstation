@@ -23,6 +23,15 @@ Test on localhost
     sudo ufw allow 22
     sudo systemctl enable ssh
     sudo systemctl start ssh
+    
+## TODO
+
+global npm packages like:
+lerna
+firebase-tools
+
+nfs client
+
 
 ## Debs vs Snaps
 
