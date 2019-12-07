@@ -30,7 +30,7 @@ global npm packages like:
 lerna
 firebase-tools
 
-nfs client
+sudo apt install nfs-common
 
 
 ## Debs vs Snaps
