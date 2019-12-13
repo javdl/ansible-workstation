@@ -32,6 +32,8 @@ firebase-tools
 
 sudo apt install nfs-common
 
+eslint
+
 insync
 
 
