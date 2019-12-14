@@ -37,6 +37,8 @@ eslint
 
 insync
 
+    apt install webp imagemagick
+    npm i -g sqip
 
 ## Debs vs Snaps
 
