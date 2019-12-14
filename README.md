@@ -29,6 +29,7 @@ Test on localhost
 global npm packages like:
 lerna
 firebase-tools
+webpack webpack-cli
 
 sudo apt install nfs-common
 
