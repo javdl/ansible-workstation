@@ -36,6 +36,10 @@ sudo apt install nfs-common
 eslint
 
 insync
+pandoc
+cryptomator
+npm install -g linux-window-session-manager
+sudo apt-get install chrome-gnome-shell
 
     apt install webp imagemagick
     npm i -g sqip
