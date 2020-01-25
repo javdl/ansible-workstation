@@ -40,6 +40,9 @@ pandoc
 cryptomator
 npm install -g linux-window-session-manager
 sudo apt-get install chrome-gnome-shell
+inkscape (illustrator)
+darktable (lightroom)
+Gimp(photoshop)
 
     apt install webp imagemagick
     npm i -g sqip
