@@ -43,6 +43,9 @@ sudo apt-get install chrome-gnome-shell
 inkscape (illustrator)
 darktable (lightroom)
 Gimp(photoshop)
+thefuck 
+sudo apt install python3-dev python3-pip python3-setuptools
+sudo pip3 install thefuck
 
     apt install webp imagemagick
     npm i -g sqip
