@@ -48,6 +48,14 @@ sudo apt install python3-dev python3-pip python3-setuptools
 sudo pip3 install thefuck
 sudo apt-get install exfat-fuse exfat-utils
 digikam, rapid photo downloader
+vlc
+
+[Rapid Photo Downloader](https://www.damonlynch.net/rapid/download.html)
+
+	cd ~/Downloads/ && wget https://launchpad.net/rapid/pyqt/0.9.19b3/+download/install.py
+	
+	python3 install.py
+    
 
     # extra steps for flatpaks to work
 sudo apt install gnome-software-plugin-flatpak
