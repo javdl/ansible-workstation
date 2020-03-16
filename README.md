@@ -46,6 +46,8 @@ Gimp(photoshop)
 thefuck 
 sudo apt install python3-dev python3-pip python3-setuptools
 sudo pip3 install thefuck
+sudo apt-get install exfat-fuse exfat-utils
+digikam, rapid photo downloader
 
     # extra steps for flatpaks to work
 sudo apt install gnome-software-plugin-flatpak
