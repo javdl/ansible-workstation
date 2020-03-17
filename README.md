@@ -64,6 +64,10 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 gcloud sdk moet weg uit snap. geeft login problemen bij vs code plugins. beter direct van apt:
 https://cloud.google.com/sdk/docs/downloads-apt-get
 
+sudo apt-get install kubectl
+
+gcloud init
+
 
 flatpak install flathub com.borgbase.Vorta # Vorta backup GUI borgbase
 
