@@ -61,6 +61,10 @@ vlc
 sudo apt install gnome-software-plugin-flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
+gcloud sdk moet weg uit snap. geeft login problemen bij vs code plugins. beter direct van apt:
+https://cloud.google.com/sdk/docs/downloads-apt-get
+
+
 flatpak install flathub com.borgbase.Vorta # Vorta backup GUI borgbase
 
     apt install webp imagemagick
