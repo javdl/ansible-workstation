@@ -74,7 +74,9 @@ flatpak install flathub com.borgbase.Vorta # Vorta backup GUI borgbase
     apt install webp imagemagick
     npm i -g sqip
     
-    zsh 
+    apt i zsh 
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
     
 ## Optional steps
 
