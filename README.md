@@ -75,7 +75,7 @@ flatpak install flathub com.borgbase.Vorta # Vorta backup GUI borgbase
     npm i -g sqip
     
     apt i zsh 
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    DO NOT INSTALL sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     
 ## Optional steps
