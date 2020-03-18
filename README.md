@@ -74,6 +74,8 @@ flatpak install flathub com.borgbase.Vorta # Vorta backup GUI borgbase
     apt install webp imagemagick
     npm i -g sqip
     
+    zsh 
+    
 ## Optional steps
 
 Install dotfiles https://gitlab.com/joostl/dotfiles (private)
