@@ -50,6 +50,10 @@ sudo apt-get install exfat-fuse exfat-utils
 digikam, rapid photo downloader
 vlc
 
+sudo add-apt-repository ppa:appimagelauncher-team/stable
+sudo apt update
+sudo apt install appimagelauncher
+
 [Rapid Photo Downloader](https://www.damonlynch.net/rapid/download.html)
 
 	cd ~/Downloads/ && wget https://launchpad.net/rapid/pyqt/0.9.19b3/+download/install.py
