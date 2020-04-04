@@ -49,6 +49,9 @@ sudo pip3 install thefuck
 sudo apt-get install exfat-fuse exfat-utils
 digikam, rapid photo downloader
 vlc
+sudo add-apt-repository ppa:inkscape.dev/stable
+sudo apt-get update
+sudo apt install inkscape
 
 sudo add-apt-repository ppa:appimagelauncher-team/stable
 sudo apt update
