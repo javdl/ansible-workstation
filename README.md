@@ -57,6 +57,9 @@ sudo add-apt-repository ppa:appimagelauncher-team/stable
 sudo apt update
 sudo apt install appimagelauncher
 
+sudo apt-get install libncurses5-dev libncursesw5-dev
+https://cmus.github.io/#download
+
 [Rapid Photo Downloader](https://www.damonlynch.net/rapid/download.html)
 
 	cd ~/Downloads/ && wget https://launchpad.net/rapid/pyqt/0.9.19b3/+download/install.py
