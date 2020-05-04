@@ -18,6 +18,12 @@
       keep_daily: 7
       keep_weekly: 4
       keep_monthly: 6
+    ubuntu_docker_packages:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    docker_users:
+    - joost
 
   tasks:
   - name: Common tasks / tools
@@ -35,8 +41,8 @@
   - name: Install Applications
     import_tasks: applications.yml
 
-  # - name: Install Docker
-  #   import_tasks: docker.yml
+  - name: Install Docker
+    import_tasks: docker.yml
 
   roles:
   - gantsign.visual-studio-code

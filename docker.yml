@@ -5,32 +5,113 @@
     apt: name={{ item }} state=latest update_cache=yes
     loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
 
-  - name: Update apt and install docker-io
-    apt: update_cache=yes name=docker-io state=latest
 
-  - name: Install Docker Module for Python
-    pip:
-      name: docker
+# ubuntu_prereq_packages:
+#   - apt-transport-https
+#   - ca-certificates
+#   - curl
+#   - gnupg-agent
+#   - software-properties-common
+# https://kifarunix.com/install-docker-ce-on-ubuntu-20-04/
 
-  # Pull image specified by variable default_image from the Docker Hub
-  - name: Pull default Docker image
-    docker_image:
-      name: "{{ default_container_image }}"
-      source: pull
+# apt install docker-ce docker-ce-cli containerd.io
 
-  # Creates the number of containers defined by the variable create_containers, using default values
-  - name: Create default containers
-    docker_container:
-      name: "{{ default_container_name }}{{ item }}"
-      image: "{{ default_container_image }}"
-      command: "{{ default_container_command }}"
+# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" > /etc/apt/sources.list.d/docker-ce.list
+
+    # - name: Uninstall old versions
+    #   apt:
+    #     name: >-
+    #         docker, docker-engine, docker.io,
+    #         containerd, runc
+    #     state: absent
+    #   become: yes
+
+  - name: add Docker apt signing key
+    apt_key:
+      url: "{{ item }}"
       state: present
-    with_sequence: count={{ create_containers }}
-  
-  - name: Install docker-compose
+    with_items:
+      - https://download.docker.com/linux/ubuntu/gpg
+    become: yes
+
+  - name: setup Docker apt repository on Ubuntu
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+      state: present
+    become: yes
+
+  - name: Install Docker-CE
     apt:
-      name: docker-compose
-      state: present
       update_cache: yes
-    tags:
-      - docker
+      name: "{{ item }}"
+      state: present
+    loop: [ 'docker-ce', 'docker-ce-cli', 'containerd.io']
+    become: yes
+
+
+  # ### Configure
+
+  # Configure docker groups
+  - name: Create the docker group
+    group:
+      name: docker
+      state: present
+    become: yes
+
+  - name: Add users to the docker secondary group
+    user:
+      name: "{{ item }}"
+      append: yes
+      groups: docker
+    become: yes
+    with_items: "{{ docker_users }}"
+
+  - name: Reset ssh connection to allow user changes to affect current user
+    meta: reset_connection
+
+  - name: Start the docker service
+    systemd:
+      name: docker
+      enabled: yes
+      state: started
+    become: yes
+    tags: molecule-notest
+
+
+
+
+
+
+
+
+
+  # - name: Update apt and install docker-io
+  #   apt: update_cache=yes name=docker-io state=latest
+
+  # - name: Install Docker Module for Python
+  #   pip:
+  #     name: docker
+
+  # # Pull image specified by variable default_image from the Docker Hub
+  # - name: Pull default Docker image
+  #   docker_image:
+  #     name: "{{ default_container_image }}"
+  #     source: pull
+
+  # # Creates the number of containers defined by the variable create_containers, using default values
+  # - name: Create default containers
+  #   docker_container:
+  #     name: "{{ default_container_name }}{{ item }}"
+  #     image: "{{ default_container_image }}"
+  #     command: "{{ default_container_command }}"
+  #     state: present
+  #   with_sequence: count={{ create_containers }}
+  
+  # - name: Install docker-compose
+  #   apt:
+  #     name: docker-compose
+  #     state: present
+  #     update_cache: yes
+  #   tags:
+  #     - docker
