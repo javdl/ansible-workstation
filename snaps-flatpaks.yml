@@ -28,7 +28,6 @@
   - name: Install Deps
     snap:
       name:
-        - sublime-text
         - kubectl
         - google-cloud-sdk
       classic: yes
@@ -37,6 +36,7 @@
   - name: Install Deps
     snap:
       name:
+        - sublime-text
         - goland
         - webstorm
       classic: yes

@@ -4,3 +4,4 @@
 - name: geerlingguy.pip
 - name: geerlingguy.docker
 - name: pixelart.chrome
+- name: chaosmail.sublime-text
