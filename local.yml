@@ -8,8 +8,8 @@
     # apt_file_chrome: /etc/apt/sources.list.d/google-chrome.list
 
   tasks:
-  - name: add Wireguard repo
-    apt_repository: repo='ppa:wireguard/wireguard'
+          #  - name: add Wireguard repo
+          #    apt_repository: repo='ppa:wireguard/wireguard'
 
   - name: Update apt cache
     apt: update_cache=yes
@@ -50,8 +50,8 @@
 # https://github.com/Zeitwaechter/SSH-with-ed25519-curve25519-GNOME-KeyRing
 # Keychain to manage SSH keys
 # also add correct script to bashrc (included in dotfiles)
-  - name: Install keychain
-    apt: name=keychain
+#  - name: Install keychain
+#    apt: name=keychain
 
   - name: Install wireguard
     apt: name=wireguard
@@ -134,19 +134,6 @@
   - name: Install vim
     apt: name=vim
 
-  - name: Add Typora GPG apt Key
-    apt_key:
-      url: https://typora.io/linux/public-key.asc
-      state: present
-
-  - name: Add Typora Repository
-    apt_repository:
-      repo: deb https://typora.io/linux ./
-      state: present
-
-  - name: Install typora
-    apt: name=typora
-
   - name: "Install Gimp"
     apt:
       pkg:
@@ -156,16 +143,7 @@
         - gimp-data-extras
       state: present
 
-  - name: "Install Python"
-    apt:
-      pkg:
-        # - python-software-properties 
-        - software-properties-common
-        - python
-        - python-dev
-        - python-pip
-        - libkrb5-dev
-      state: present
+      # Python is installed by default on Ubuntu
 
   - name: "Install Archive tools"
     apt:
@@ -206,10 +184,6 @@
         - google-cloud-sdk
       classic: yes
 
-# API clients
-  # - name: Install insomnia
-  #   apt: name=insomnia
-
   - name: Install Postman
     snap:
       name:
@@ -241,8 +215,8 @@
   #     name: hugo
   #     channel: extended
 
-  - name: Install Hugo static site generator
-    apt: name=hugo
+          #  - name: Install Hugo static site generator
+          # apt: name=hugo
 
   - name: Install steam-installer
     apt: name=steam-installer
@@ -267,18 +241,8 @@
     apt: name={{ item }} state=latest update_cache=yes
     loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
 
-  - name: Add Docker GPG apt Key
-    apt_key:
-      url: https://download.docker.com/linux/ubuntu/gpg
-      state: present
-
-  - name: Add Docker Repository
-    apt_repository:
-      repo: deb https://download.docker.com/linux/ubuntu bionic stable # Ubuntu 19.10 eoan is not yet in supported distro list. https://docs.docker.com/install/linux/docker-ce/ubuntu/
-      state: present
-
-  - name: Update apt and install docker-ce
-    apt: update_cache=yes name=docker-ce state=latest
+  - name: Update apt and install docker-io
+    apt: update_cache=yes name=docker-io state=latest
 
   - name: Install Docker Module for Python
     pip:
