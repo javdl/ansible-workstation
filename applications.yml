@@ -1,0 +1,16 @@
+  - name: Install steam-installer
+    apt: name=steam-installer
+
+  - name: Ensure Calibre is installed at latest available version.
+    apt:
+      name: calibre
+      state: latest
+
+  - name: "Install Gimp"
+    apt:
+      pkg:
+        - gimp 
+        - gimp-data
+        - gimp-plugin-registry
+        - gimp-data-extras
+      state: present

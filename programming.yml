@@ -3,3 +3,6 @@
 
   - name: Install erlang
     apt: name=erlang
+  
+  - name: Install emacs
+    apt: name=emacs

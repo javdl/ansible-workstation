@@ -11,7 +11,7 @@
 
 Install requirements
 
-    ansible-galaxy install -r requirements.yml
+    sudo ansible-galaxy install -r requirements.yml
 
 Run as sudo, we are changing the system.
 
@@ -21,13 +21,16 @@ Test on localhost
 
     sudo ansible-playbook local.yml
 
+## Create a role:
+
+    ansible-galaxy init test-role-1
+
 ## Enable remote install on freshly installed machine
 
     sudo apt install openssh-server
     sudo ufw allow 22
     sudo systemctl enable ssh
     sudo systemctl start ssh
-    
 ## TODO
 
 global npm packages like:

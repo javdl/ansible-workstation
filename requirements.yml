@@ -1,2 +1,6 @@
 # from galaxy
 - name: gantsign.visual-studio-code
+- name: gantsign.golang
+- name: geerlingguy.pip
+- name: geerlingguy.docker
+- name: pixelart.chrome

@@ -16,6 +16,7 @@
       name:
         - go
       classic: yes
+      state: absent
 
   - name: Install VS Code
     snap:
@@ -28,33 +29,45 @@
     snap:
       name:
         - sublime-text
-        - goland
-        - webstorm
         - kubectl
         - google-cloud-sdk
       classic: yes
+      # state: absent
+  
+  - name: Install Deps
+    snap:
+      name:
+        - goland
+        - webstorm
+      classic: yes
+      state: absent
 
   - name: Install Postman
     snap:
       name:
         - postman
+      # state: absent
 
   - name: Install gitkraken
     snap:
       name:
         - gitkraken
+      # state: absent
 
   - name: Install terraform
     snap:
       name:
         - terraform
+      # state: absent
 
   - name: Install signal-desktop
     snap:
       name:
         - signal-desktop
+      # state: absent
 
   - name: Install spotify
     snap:
       name:
         - spotify
+      # state: absent

@@ -1,0 +1,49 @@
+- name: run ansible galaxy
+  local_action: command ansible-galaxy install -r requirements.yml --ignore-errors
+
+- name: Install aptitude using apt
+  apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+
+- name: Update apt cache
+  apt: update_cache=yes
+  
+- name: Upgrade packages
+  apt: upgrade=dist
+
+- name: Check if a reboot is required
+  register: reboot_required_file
+  stat: path=/var/run/reboot-required get_md5=no
+
+- name: restart machine
+  become: yes
+  shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+  async: 1
+  poll: 0
+  ignore_errors: true
+  when: reboot_required_file.stat.exists == true
+
+- name: "Install dependencies"
+  apt:
+    pkg:
+      - htop
+      - mc
+      - tmux
+      - wget
+      - unzip
+      - curl
+      - vim
+      - ufw
+      - xclip
+      - git
+      - apt-transport-https
+      - build-essential
+      - libssl-dev
+    state: present
+
+- name: "Install Archive tools"
+  apt:
+    pkg:
+      - unrar
+      - p7zip-full
+      - p7zip-rar
+    state: present

@@ -3,117 +3,49 @@
   vars:
     create_containers: 4
     default_container_name: docker
-    default_container_image: ubuntu
+    default_container_image: alpine
     default_container_command: sleep 1d
-    # apt_file_chrome: /etc/apt/sources.list.d/google-chrome.list
-  roles:
-  - { role: gantsign.visual-studio-code }
+    golang_gopath: '$HOME/workspace-go'
 
   tasks:
-  - name: run ansible galaxy
-    local_action: command ansible-galaxy install -r requirements.yml --ignore-errors
-
-  - name: Install aptitude using apt
-    apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
-
-  - name: Update apt cache
-    apt: update_cache=yes
-    
-  - name: Upgrade packages
-    apt: upgrade=dist
-
-  - name: Check if a reboot is required
-    register: reboot_required_file
-    stat: path=/var/run/reboot-required get_md5=no
-
-  - name: restart machine
-    become: yes
-    shell: sleep 2 && shutdown -r now "Ansible updates triggered"
-    async: 1
-    poll: 0
-    ignore_errors: true
-    when: reboot_required_file.stat.exists == true
-
-  - name: "Install dependencies"
-    apt:
-      pkg:
-        - htop
-        - mc
-        - tmux
-        - wget
-        - unzip
-        - curl
-        - vim
-        - ufw
-        - xclip
-        - git
-        - apt-transport-https
-        - build-essential
-        - libssl-dev
-      state: present
+  - name: Common tasks / tools
+    import_tasks: common.yml
 
   - name: Install VPN, SSH remote access and keychain
     import_tasks: VPN-SSH.yml
 
-# # Nodejs and NVM
-# curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-# source ~/.profile
-# nvm install node
-# nvm use node
-# nvm install stable
-# nvm alias default stable
-# node -v
-# npm -v
-  
-  - name: Install Chrome browser
-    import_tasks: browser-chrome.yml
-
-  - name: Install emacs
-    apt: name=emacs
-
-  - name: "Install Gimp"
-    apt:
-      pkg:
-        - gimp 
-        - gimp-data
-        - gimp-plugin-registry
-        - gimp-data-extras
-      state: present
-
-  - name: "Install Archive tools"
-    apt:
-      pkg:
-        - unrar
-        - p7zip-full
-        - p7zip-rar
-      state: present
-
   - name: Install Programming
     import_tasks: programming.yml
 
- 
-  # Install a snap with from a specific channel
+  - name: Install snaps
+    import_tasks: snaps-flatpaks.yml
+
+  - name: Install Applications
+    import_tasks: applications.yml
+
+  # - name: Install Docker
+  #   import_tasks: docker.yml
+
+  roles:
+  - gantsign.visual-studio-code
+  - gantsign.golang
+  - pixelart.chrome
+  # - geerlingguy.pip not yet 20.04
+  # - geerlingguy.docker not yet 20.04
+
+
+  # - { role: dotfiles }
+
+  # - role: stephdewit.nvm
+  #   nvm_version: HEAD
+
+# TODO:
+
+    # Install a snap with from a specific channel
   # - name: Install "Hugo" with option --channel=extended
   #   snap:
   #     name: hugo
   #     channel: extended
 
-          #  - name: Install Hugo static site generator
+          #  - name: Install Hugo static site generator >> will install old version
           # apt: name=hugo
-
-  - name: Install steam-installer
-    apt: name=steam-installer
-
-  - name: Ensure Calibre is installed at latest available version.
-    apt:
-      name: calibre
-      state: latest
-
-  - name: Install snaps
-    import_tasks: snaps-flatpaks.yml
-
-  # - name: Install Docker
-  #   import_tasks: docker.yml
-
-
-
