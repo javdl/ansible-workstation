@@ -6,6 +6,18 @@
     default_container_image: alpine
     default_container_command: sleep 1d
     golang_gopath: '$HOME/workspace-go'
+    borg_encryption_passphrase: CHANGEME
+    borg_repository: m5vz9gp4@m5vz9gp4.repo.borgbase.com:repo
+    borg_source_directories:
+      - /srv/www
+      - /var/lib/automysqlbackup
+    borg_exclude_patterns:
+      - /srv/www/old-sites
+    borg_retention_policy:
+      keep_hourly: 3
+      keep_daily: 7
+      keep_weekly: 4
+      keep_monthly: 6
 
   tasks:
   - name: Common tasks / tools
@@ -31,6 +43,11 @@
   - gantsign.golang
   - pixelart.chrome
   - chaosmail.sublime-text
+  - gantsign.postman
+  - m3nu.ansible_role_borgbackup
+  - andrewrothstein.kubectl
+  - andrewrothstein.terraform
+
   # - geerlingguy.pip not yet 20.04
   # - geerlingguy.docker not yet 20.04
 
@@ -39,14 +56,3 @@
 
   # - role: stephdewit.nvm
   #   nvm_version: HEAD
-
-# TODO:
-
-    # Install a snap with from a specific channel
-  # - name: Install "Hugo" with option --channel=extended
-  #   snap:
-  #     name: hugo
-  #     channel: extended
-
-          #  - name: Install Hugo static site generator >> will install old version
-          # apt: name=hugo

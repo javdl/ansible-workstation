@@ -5,3 +5,7 @@
 - name: geerlingguy.docker
 - name: pixelart.chrome
 - name: chaosmail.sublime-text
+- name: gantsign.postman
+- name: m3nu.ansible_role_borgbackup
+- name: andrewrothstein.kubectl
+- name: andrewrothstein.terraform

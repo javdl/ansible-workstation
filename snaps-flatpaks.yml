@@ -5,69 +5,48 @@
     apt: name=flatpak
 # flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
- # Install "foo" and "bar" snap
   - name: Install Snap Store
     snap:
       name:
         - snap-store
 
-  - name: Install Golang
-    snap:
-      name:
-        - go
-      classic: yes
-      state: absent
-
-  - name: Install VS Code
-    snap:
-      name:
-        - code
-      classic: yes
-      state: absent
-
   - name: Install Deps
     snap:
       name:
-        - kubectl
         - google-cloud-sdk
       classic: yes
-      # state: absent
   
-  - name: Install Deps
+  - name: Remove Snaps we replaced with bins
     snap:
       name:
         - sublime-text
-        - goland
-        - webstorm
+        - goland # removed entirely
+        - webstorm # removed entirely
+        - kubectl
+        - terraform
+        - code # VS code
+        - go # Golang
+        - postman
       classic: yes
       state: absent
 
-  - name: Install Postman
+    # Install a snap with from a specific channel
+  - name: Install "Hugo" with option --channel=extended
     snap:
-      name:
-        - postman
-      # state: absent
+      name: hugo
+      channel: extended
 
   - name: Install gitkraken
     snap:
       name:
         - gitkraken
-      # state: absent
-
-  - name: Install terraform
-    snap:
-      name:
-        - terraform
-      # state: absent
 
   - name: Install signal-desktop
     snap:
       name:
         - signal-desktop
-      # state: absent
 
   - name: Install spotify
     snap:
       name:
         - spotify
-      # state: absent
