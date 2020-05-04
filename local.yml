@@ -6,10 +6,15 @@
     default_container_image: ubuntu
     default_container_command: sleep 1d
     # apt_file_chrome: /etc/apt/sources.list.d/google-chrome.list
+  roles:
+  - { role: gantsign.visual-studio-code }
 
   tasks:
-          #  - name: add Wireguard repo
-          #    apt_repository: repo='ppa:wireguard/wireguard'
+  - name: run ansible galaxy
+    local_action: command ansible-galaxy install -r requirements.yml --ignore-errors
+
+  - name: Install aptitude using apt
+    apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
 
   - name: Update apt cache
     apt: update_cache=yes
@@ -47,44 +52,8 @@
         - libssl-dev
       state: present
 
-# https://github.com/Zeitwaechter/SSH-with-ed25519-curve25519-GNOME-KeyRing
-# Keychain to manage SSH keys
-# also add correct script to bashrc (included in dotfiles)
-#  - name: Install keychain
-#    apt: name=keychain
-
-  - name: Install wireguard
-    apt: name=wireguard
-  # sudo touch /etc/wireguard/.reload-module-on-update
-
-  - name: Install openssh-server
-    apt: name=openssh-server
-
-  - name: Install OpenVPN
-    apt: pkg=openvpn state=latest
-
-  - name: UFW - Allow SSH connections
-    ufw:
-      rule: allow
-      name: OpenSSH
-
-  - name: UFW - Deny all other incoming traffic by default
-    ufw:
-      state: enabled
-      policy: deny
-      direction: incoming
-
-# # SSH server, only install if you want to enable SSH access
-# sudo ufw allow 22
-# sudo systemctl enable ssh
-# sudo systemctl start ssh  
-
-  - name: Install snapd
-    apt: name=snapd
-
-  - name: Install flatpak
-    apt: name=flatpak
-# flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  - name: Install VPN, SSH remote access and keychain
+    import_tasks: VPN-SSH.yml
 
 # # Nodejs and NVM
 # curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
@@ -96,43 +65,11 @@
 # node -v
 # npm -v
   
-# Google Chrome
-
-  # - name: Does the Google apt file exist?
-  #   command: test -f {{apt_file_chrome}}
-  #   register: google_apt_exists
-  #   ignore_errors: True
-
-  # - name: Add Google Chrome key
-  #   shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-  #   when: google_apt_exists.rc == 1
-
-  # - name: Add Google Chrome repo
-  #   copy: content="deb http://dl.google.com/linux/chrome/deb/ stable main" dest={{apt_file_chrome}} owner=root group=root mode=644
-  #   when: google_apt_exists.rc == 1
-
-  # - name: Update apt cache
-  #   apt: update_cache=yes
-  #   when: google_apt_exists.rc == 1
-  
-  - name: Add Chrome GPG apt Key
-    apt_key:
-      url: https://dl-ssl.google.com/linux/linux_signing_key.pub
-      state: present
-
-  - name: Add Chrome repo
-    apt_repository:
-      repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
-      state: present
-
-  - name: Install Google Chrome
-    apt: pkg=google-chrome-stable state=latest
+  - name: Install Chrome browser
+    import_tasks: browser-chrome.yml
 
   - name: Install emacs
     apt: name=emacs
-  
-  - name: Install vim
-    apt: name=vim
 
   - name: "Install Gimp"
     apt:
@@ -143,8 +80,6 @@
         - gimp-data-extras
       state: present
 
-      # Python is installed by default on Ubuntu
-
   - name: "Install Archive tools"
     apt:
       pkg:
@@ -153,62 +88,10 @@
         - p7zip-rar
       state: present
 
-  - name: Install erlang
-    apt: name=erlang
+  - name: Install Programming
+    import_tasks: programming.yml
 
-  # Install "foo" and "bar" snap
-  - name: Install Snap Store
-    snap:
-      name:
-        - snap-store
-
-  - name: Install Golang
-    snap:
-      name:
-        - go
-      classic: yes
-
-  - name: Install VS Code
-    snap:
-      name:
-        - code
-      classic: yes
-
-  - name: Install Deps
-    snap:
-      name:
-        - sublime-text
-        - goland
-        - webstorm
-        - kubectl
-        - google-cloud-sdk
-      classic: yes
-
-  - name: Install Postman
-    snap:
-      name:
-        - postman
-
-  - name: Install gitkraken
-    snap:
-      name:
-        - gitkraken
-
-  - name: Install terraform
-    snap:
-      name:
-        - terraform
-
-  - name: Install signal-desktop
-    snap:
-      name:
-        - signal-desktop
-
-  - name: Install spotify
-    snap:
-      name:
-        - spotify
-
+ 
   # Install a snap with from a specific channel
   # - name: Install "Hugo" with option --channel=extended
   #   snap:
@@ -226,39 +109,11 @@
       name: calibre
       state: latest
 
-  - name: Install docker-compose
-    apt:
-      name: docker-compose
-      state: present
-      update_cache: yes
-    tags:
-      - docker
+  - name: Install snaps
+    import_tasks: snaps-flatpaks.yml
 
-  - name: Install aptitude using apt
-    apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+  # - name: Install Docker
+  #   import_tasks: docker.yml
 
-  - name: Install required system packages
-    apt: name={{ item }} state=latest update_cache=yes
-    loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
 
-  - name: Update apt and install docker-io
-    apt: update_cache=yes name=docker-io state=latest
 
-  - name: Install Docker Module for Python
-    pip:
-      name: docker
-
-  # Pull image specified by variable default_image from the Docker Hub
-  - name: Pull default Docker image
-    docker_image:
-      name: "{{ default_container_image }}"
-      source: pull
-
-  # Creates the number of containers defined by the variable create_containers, using default values
-  - name: Create default containers
-    docker_container:
-      name: "{{ default_container_name }}{{ item }}"
-      image: "{{ default_container_image }}"
-      command: "{{ default_container_command }}"
-      state: present
-    with_sequence: count={{ create_containers }}

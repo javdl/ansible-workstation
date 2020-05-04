@@ -1,0 +1,31 @@
+# https://github.com/Zeitwaechter/SSH-with-ed25519-curve25519-GNOME-KeyRing
+# Keychain to manage SSH keys
+# also add correct script to bashrc (included in dotfiles)
+#  - name: Install keychain
+#    apt: name=keychain
+
+  - name: Install wireguard
+    apt: name=wireguard
+  # sudo touch /etc/wireguard/.reload-module-on-update
+
+  - name: Install openssh-server
+    apt: name=openssh-server
+
+  - name: Install OpenVPN
+    apt: pkg=openvpn state=latest
+
+  - name: UFW - Allow SSH connections
+    ufw:
+      rule: allow
+      name: OpenSSH
+
+  - name: UFW - Deny all other incoming traffic by default
+    ufw:
+      state: enabled
+      policy: deny
+      direction: incoming
+
+# # SSH server, only install if you want to enable SSH access
+# sudo ufw allow 22
+# sudo systemctl enable ssh
+# sudo systemctl start ssh  

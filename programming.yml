@@ -1,0 +1,5 @@
+
+            # Python is installed by default on Ubuntu
+
+  - name: Install erlang
+    apt: name=erlang

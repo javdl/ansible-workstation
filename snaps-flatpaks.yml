@@ -1,0 +1,60 @@
+  - name: Install snapd
+    apt: name=snapd
+
+  - name: Install flatpak
+    apt: name=flatpak
+# flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+ # Install "foo" and "bar" snap
+  - name: Install Snap Store
+    snap:
+      name:
+        - snap-store
+
+  - name: Install Golang
+    snap:
+      name:
+        - go
+      classic: yes
+
+  - name: Install VS Code
+    snap:
+      name:
+        - code
+      classic: yes
+      state: absent
+
+  - name: Install Deps
+    snap:
+      name:
+        - sublime-text
+        - goland
+        - webstorm
+        - kubectl
+        - google-cloud-sdk
+      classic: yes
+
+  - name: Install Postman
+    snap:
+      name:
+        - postman
+
+  - name: Install gitkraken
+    snap:
+      name:
+        - gitkraken
+
+  - name: Install terraform
+    snap:
+      name:
+        - terraform
+
+  - name: Install signal-desktop
+    snap:
+      name:
+        - signal-desktop
+
+  - name: Install spotify
+    snap:
+      name:
+        - spotify
