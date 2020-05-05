@@ -1,0 +1,17 @@
+# Note that I specifically declared User ID 900 for this user by using the UID
+# option. This isn't required, but it's recommended. The reason is that UIDs 
+# under 1,000 are typically not shown on the login screen, which is great
+# because there's no reason we would need to log into a desktop session as our
+# ansible user. UID 900 is arbitrary; it should be any number under 1,000
+# that's not already in use. You can find out if UID 900 is in use on your
+# system with the following command:
+#  cat /etc/passwd |grep 900
+# However, you shouldn't run into a problem with this UID because I've never
+# seen it used by default in any distribution I've used so far.
+# https://opensource.com/article/18/3/manage-your-workstation-configuration-ansible-part-2
+
+- name: create ansible user
+  user: name=ansible uid=900
+
+- name: copy sudoers_ansible
+  copy: src=files/sudoers_ansible dest=/etc/sudoers.d/ansible owner=root group=root mode=0440

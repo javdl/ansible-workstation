@@ -1,5 +1,9 @@
 - hosts: localhost
   become: true
+  pre_tasks:
+    - name: update repositories
+      apt: update_cache=yes
+      changed_when: False
   vars:
     create_containers: 4
     default_container_name: docker
@@ -26,23 +30,14 @@
     - joost
 
   tasks:
-  - name: Common tasks / tools
-    import_tasks: common.yml
-
-  - name: Install VPN, SSH remote access and keychain
-    import_tasks: VPN-SSH.yml
-
-  - name: Install Programming
-    import_tasks: programming.yml
-
-  - name: Install snaps
-    import_tasks: snaps-flatpaks.yml
-
-  - name: Install Applications
-    import_tasks: applications.yml
-
-  - name: Install Docker
-    import_tasks: docker.yml
+    - include_tasks: tasks/users.yml
+    - include_tasks: tasks/cron.yml
+    - include_tasks: tasks/common.yml
+    - include_tasks: tasks/VPN-SSH.yml
+    - include_tasks: tasks/programming.yml
+    - include_tasks: tasks/snaps-flatpaks.yml
+    - include_tasks: tasks/applications.yml
+    - include_tasks: tasks/docker.yml
 
   roles:
   - gantsign.visual-studio-code

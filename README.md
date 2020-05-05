@@ -134,3 +134,9 @@ Debs are typically frozen when an Ubuntu release is cut, and that deb typically 
 It's worth pointing out that there are PPAs which allow debs to be updated outside of the distribution as well, but these require putting your trust in a particular person rather than the maintainers of Ubuntu. If you install a deb, you're potentially handing your system over to whoever created it since it has hooks that run as root without any sense of confinement.
 
 [Source](https://www.reddit.com/r/Ubuntu/comments/a364ii/proscons_of_snap_vs_apt/)
+
+## Resources
+
+[Part 1](https://opensource.com/article/18/3/manage-workstation-ansible)
+https://opensource.com/article/18/3/manage-your-workstation-configuration-ansible-part-2
+https://opensource.com/article/18/5/manage-your-workstation-ansible-part-3

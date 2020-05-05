@@ -1,0 +1,5 @@
+# Notice the -o option I added to the ansible-pull command in the cron job that
+# we've never used before. This option tells Ansible to run only if the
+# repository has changed since the last time ansible-pull was called.
+- name: install cron job (ansible-pull)
+  cron: user="ansible" name="ansible provision" minute="*/10" job="/usr/bin/ansible-pull -o -U https://github.com/Joostvanderlaan/ansible-workstation.git > /dev/null"
