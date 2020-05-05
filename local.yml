@@ -9,7 +9,7 @@
     default_container_name: docker
     default_container_image: alpine
     default_container_command: sleep 1d
-    golang_gopath: '$HOME/workspace-go'
+    golang_gopath: "$HOME/workspace-go"
     borg_encryption_passphrase: CHANGEME
     borg_repository: m5vz9gp4@m5vz9gp4.repo.borgbase.com:repo
     borg_source_directories:
@@ -23,11 +23,11 @@
       keep_weekly: 4
       keep_monthly: 6
     ubuntu_docker_packages:
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
     docker_users:
-    - joost
+      - joost
 
   tasks:
     - include_tasks: tasks/users.yml
@@ -38,20 +38,19 @@
     - include_tasks: tasks/snaps-flatpaks.yml
     - include_tasks: tasks/applications.yml
     - include_tasks: tasks/docker.yml
+    - include_tasks: tasks/gnome.yml
 
   roles:
-  - gantsign.visual-studio-code
-  - gantsign.golang
-  - pixelart.chrome
-  - chaosmail.sublime-text
-  - gantsign.postman
-  - m3nu.ansible_role_borgbackup
-  - andrewrothstein.kubectl
-  - andrewrothstein.terraform
-
+    - gantsign.visual-studio-code
+    - gantsign.golang
+    - pixelart.chrome
+    - chaosmail.sublime-text
+    - gantsign.postman
+    - m3nu.ansible_role_borgbackup
+    - andrewrothstein.kubectl
+    - andrewrothstein.terraform
   # - geerlingguy.pip not yet 20.04
   # - geerlingguy.docker not yet 20.04
-
 
   # - { role: dotfiles }
 

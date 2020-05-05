@@ -1,0 +1,16 @@
+- pip:
+    name: psutil
+
+- name: Copy wallpaper file
+  copy: src=files/wallpaper.jpg dest=/home/joost/.wallpaper.jpg owner=joost group=joost mode=600
+
+- name: Set GNOME Wallpaper
+  become_user: joost
+  dconf: key="/org/gnome/desktop/background/picture-uri" value="'file:///home/joost/.wallpaper.jpg'"
+
+- name: Copy screensaver file
+  copy: src=files/screensaver.jpg dest=/home/joost/.screensaver.jpg owner=joost group=joost mode=600
+
+- name: Set GNOME Screensaver
+  become_user: joost
+  dconf: key="/org/gnome/desktop/screensaver/picture-uri" value="'file:///home/joost/.screensaver.jpg'"
