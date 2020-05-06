@@ -1,8 +1,9 @@
 # from galaxy
-- name: gantsign.visual-studio-code
-- name: gantsign.golang
 - name: geerlingguy.pip
 - name: geerlingguy.docker
+- name: geerlingguy.nodejs
+- name: gantsign.visual-studio-code
+- name: gantsign.golang
 - name: pixelart.chrome
 - name: chaosmail.sublime-text
 - name: gantsign.postman

@@ -1,0 +1,100 @@
+- name: Install packages
+  apt: name={{item}} state=latest
+  with_items:
+    - htop
+    - mc
+    - tmux
+    - zsh
+    - net-tools
+    - steam-installer
+    - calibre
+    - gimp # (photoshop)
+    - gimp-data
+    - gimp-plugin-registry
+    - gimp-data-extras
+    - emacs
+    - erlang
+    - nfs-common
+    # - insync
+    - chrome-gnome-shell
+    - inkscape # (illustrator) ppa:inkscape.dev/stable
+    - darktable # (lightroom) 
+    - thefuck # shell autocorrect
+    - exfat-fuse 
+    - exfat-utils
+    - digikam
+    - webp # used for Hugo Theme / manual image creation
+    - imagemagick
+    # - rapid photo downloader https://www.damonlynch.net/rapid/download.html
+    # cd ~/Downloads/ && wget https://launchpad.net/rapid/pyqt/0.9.19b3/+download/install.py
+    # python3 install.py
+    - vlc
+    # - appimagelauncher # sudo add-apt-repository ppa:appimagelauncher-team/stable sudo apt update sudo apt install 
+    # cmus c music player: sudo apt-get install libncurses5-dev libncursesw5-dev https://cmus.github.io/#download
+
+    #  python3-dev python3-pip python3-setuptools
+    #   sudo pip3 install thefuck 
+    #   sudo apt-get install 
+
+## SNAP & Flatpak setup
+
+- name: Install packages
+  apt: name={{item}} state=latest
+  with_items:
+    - snapd
+    - flatpak
+    - gnome-software-plugin-flatpak
+
+- name: Add the Gnome flatpak remote to the system installation
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+## SNAPS
+
+- name: Install Snap Store
+  snap:
+    name:
+      - snap-store
+
+- name: Install Deps
+  snap:
+    name:
+      - google-cloud-sdk
+    classic: yes
+
+- name: Remove Snaps we replaced with bins
+  snap:
+    name:
+      - sublime-text
+      - goland # removed entirely
+      - webstorm # removed entirely
+      - kubectl
+      - terraform
+      - code # VS code
+      - go # Golang
+      - postman
+    classic: yes
+    state: absent
+
+  # Install a snap with from a specific channel
+- name: Install "Hugo" with option --channel=extended
+  snap:
+    name: hugo
+    channel: extended
+
+- name: Install gitkraken
+  snap:
+    name:
+      - gitkraken
+
+- name: Install signal-desktop
+  snap:
+    name:
+      - signal-desktop
+
+- name: Install spotify
+  snap:
+    name:
+      - spotify

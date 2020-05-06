@@ -1,0 +1,11 @@
+- name: Install Global NPM packages
+  npm: name={{item}} global=yes
+  with_items:
+    - lerna
+    - firebase-tools
+    - webpack
+    - webpack-cli
+    - eslint
+    - linux-window-session-manager
+    - sqip
+

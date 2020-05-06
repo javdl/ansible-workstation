@@ -31,69 +31,13 @@ Test on localhost
     sudo ufw allow 22
     sudo systemctl enable ssh
     sudo systemctl start ssh
+
 ## TODO
-
-global npm packages like:
-lerna
-firebase-tools
-webpack webpack-cli
-
-sudo apt install nfs-common
-
-eslint
-
-insync
-pandoc
-cryptomator
-npm install -g linux-window-session-manager
-sudo apt-get install chrome-gnome-shell
-inkscape (illustrator)
-darktable (lightroom)
-Gimp(photoshop)
-thefuck 
-sudo apt install python3-dev python3-pip python3-setuptools
-sudo pip3 install thefuck
-sudo apt-get install exfat-fuse exfat-utils
-digikam, rapid photo downloader
-vlc
-sudo add-apt-repository ppa:inkscape.dev/stable
-sudo apt-get update
-sudo apt install inkscape
-
-sudo add-apt-repository ppa:appimagelauncher-team/stable
-sudo apt update
-sudo apt install appimagelauncher
-
-sudo apt-get install libncurses5-dev libncursesw5-dev
-https://cmus.github.io/#download
-
-[Rapid Photo Downloader](https://www.damonlynch.net/rapid/download.html)
-
-	cd ~/Downloads/ && wget https://launchpad.net/rapid/pyqt/0.9.19b3/+download/install.py
-	
-	python3 install.py
-    
-
-    # extra steps for flatpaks to work
-sudo apt install gnome-software-plugin-flatpak
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 gcloud sdk moet weg uit snap. geeft login problemen bij vs code plugins. beter direct van apt:
 https://cloud.google.com/sdk/docs/downloads-apt-get
 
-sudo apt-get install kubectl
-
 gcloud init
-
-
-flatpak install flathub com.borgbase.Vorta # Vorta backup GUI borgbase
-
-    apt install webp imagemagick
-    npm i -g sqip
-    
-    apt i zsh 
-    DO NOT INSTALL sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
     
 ## Optional steps
 
