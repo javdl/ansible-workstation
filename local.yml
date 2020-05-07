@@ -1,3 +1,7 @@
+---
+
+- import_playbook: install-roles.yml
+
 - hosts: localhost
   become: true
   pre_tasks:
