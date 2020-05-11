@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  roles:
+    - sublime-text
+  vars:
+    sublime_version: 3
+    sublime_packages:
+      - 'https://github.com/skuroda/Sublime-AdvancedNewFile.git'
+      - 'https://github.com/clifford-github/sublime-ansible.git'
+      - 'https://github.com/weslly/ColorPicker.git'
+      - 'https://github.com/kemayo/sublime-text-git.git'
+      - 'https://github.com/jisaacks/GitGutter.git'
+      - 'https://github.com/mitsuhiko/jinja2-tmbundle'
+      - 'https://github.com/revolunet/sublimetext-markdown-preview'
+      - 'https://github.com/SublimeLinter/SublimeLinter3.git'
+      - 'https://github.com/Microsoft/TypeScript-Sublime-Plugin.git'

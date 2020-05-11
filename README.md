@@ -9,13 +9,17 @@
 
 ## Quick start
 
-Install requirements
-
-    sudo ansible-galaxy install -r requirements.yml
-
 Run as sudo, we are changing the system.
 
     sudo ansible-pull -U https://github.com/Joostvanderlaan/ansible-workstation
+
+## Start
+
+    git clone https://github.com/Joostvanderlaan/ansible-workstation
+
+Install requirements
+
+    sudo ansible-galaxy install -r requirements.yml
 
 Test on localhost
 
@@ -31,6 +35,10 @@ Test on localhost
     sudo ufw allow 22
     sudo systemctl enable ssh
     sudo systemctl start ssh
+
+## 6 months later, restore machine to original state
+
+    ansible-playbook -K ~/post_install.yml
 
 ## TODO
 

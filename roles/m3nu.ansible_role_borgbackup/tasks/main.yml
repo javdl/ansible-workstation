@@ -1,0 +1,111 @@
+---
+- include_vars: '{{ ansible_pkg_mgr }}.yml'
+- include: "{{ ansible_pkg_mgr }}.yml"
+
+- name: Install required System Packages
+  package:
+    pkg: "{{ item }}"
+    state: present
+  with_items: "{{ borg_packages }}"
+
+- name: Update setuptools if needed
+  pip:
+    name: setuptools
+    state: latest
+    executable: "{{ pip_bin }}"
+
+- name: Install required Python Packages
+  pip:
+    name: "{{ item }}"
+    executable: "{{ pip_bin }}"
+  with_items: "{{ borg_python_packages }}"
+
+- name: Ensure root has SSH key.
+  user:
+    name: "root"
+    generate_ssh_key: yes
+    ssh_key_file: "{{ ssh_key_file }}"
+    ssh_key_type: ed25519
+  register: root_user
+
+- debug:
+    var: root_user['ssh_public_key']
+    
+- name: Create new repository for server
+  borgbase:
+    repository_name: "{{ bb_repo_name }}"
+    token: "{{ bb_token}}"
+    new_ssh_key: "{{ bb_new_sshkey }}"
+    ssh_key: "{{ bb_sshkey }}"
+    append_only: "{{ bb_append }}"
+    quota_enable: "{{ bb_quota }}"
+    quota: "{{ bb_quota_size }}"
+    region: "{{ bb_region }}"
+    alertdays: "{{ bb_alertdays }}"
+  delegate_to: localhost
+  become: no
+  register: repo_creation
+  when: create_repo
+ 
+- name: Set Repository Fact
+  set_fact:
+    borg_repository: "{{ repo_creation['data']['repoPath'] }}"
+  when: create_repo
+
+- name: Ensures /etc/borgmatic.d exists
+  file:
+    path: /etc/borgmatic.d
+    state: directory
+    mode: 0700
+    owner: root
+
+- name: Add Borgmatic Configuration
+  template:
+    src: config.yaml.j2
+    dest: "/etc/borgmatic.d/{{ item | regex_replace('\\/$', '') | basename }}.yaml"
+    mode: 0600
+  with_items: "{{ borg_source_directories }}"
+
+- debug: msg="/etc/borgmatic.d/{{ item | regex_replace('\\/$', '') | basename }}.yaml"
+  with_items: "{{ borg_source_directories }}"
+
+- name: Add cron-job for borgmatic (large repo, create and check separate)
+  block:
+    - cron:
+        name: "borgmatic"
+        hour: "{{ 6 |random }}"
+        minute: "{{ 59 |random }}"
+        user: "root"
+        cron_file: borgmatic
+        job: "/usr/local/bin/borgmatic --create --prune"
+    - cron:
+        name: "borgmatic-check"
+        day: "{{ 28 | random }}"
+        hour: "{{ range(7, 24) | random }}"
+        minute: "{{ 59 | random }}"
+        user: "root"
+        cron_file: borgmatic
+        job: "/usr/local/bin/borgmatic --check"
+  when: borgmatic_large_repo
+
+- name: Add cron-job for borgmatic (normal-sized repo)
+  block:
+    - cron:
+        name: "borgmatic"
+        hour: "{{ 6 | random }}"
+        minute: "{{ 59 | random }}"
+        user: "root"
+        cron_file: borgmatic
+        job: "/usr/local/bin/borgmatic"
+    - cron:
+        name: "borgmatic-check"
+        state: absent
+  when: not borgmatic_large_repo
+
+- name: Set PATH for borgmatic cron job.
+  cron:
+    user: "root"
+    cron_file: borgmatic
+    name: PATH
+    env: yes
+    value: /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
