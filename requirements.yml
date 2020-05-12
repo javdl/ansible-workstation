@@ -10,3 +10,6 @@
 - name: m3nu.ansible_role_borgbackup
 - name: andrewrothstein.kubectl
 - name: andrewrothstein.terraform
+- src: https://github.com/Joostvanderlaan/ansible-role-joplin.git
+  scm: git
+  name: joplin

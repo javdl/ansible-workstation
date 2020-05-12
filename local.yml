@@ -53,6 +53,13 @@
     - m3nu.ansible_role_borgbackup
     - andrewrothstein.kubectl
     - andrewrothstein.terraform
+    - role: joplin
+      users:
+        - username: joost
+          settings:
+            - { key: "sidebarVisibility", val: "1" }
+            - { key: "dateFormat", val: "YYYY-MM-DD" }
+            - { key: "sync.target", val: "5" }
   # - geerlingguy.pip not yet 20.04
   # - geerlingguy.docker not yet 20.04
 

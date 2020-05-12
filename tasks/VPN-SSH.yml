@@ -25,6 +25,12 @@
       policy: deny
       direction: incoming
 
+  - name: Set authorized keys taken from url (GitHub)
+    authorized_key:
+      user: joost
+      state: present
+      key: https://github.com/Joostvanderlaan.keys
+
 # # SSH server, only install if you want to enable SSH access
 # sudo ufw allow 22
 # sudo systemctl enable ssh
