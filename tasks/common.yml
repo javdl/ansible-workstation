@@ -4,6 +4,19 @@
 - name: Install aptitude using apt
   apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
 
+- name: Figma
+  apt_repository:
+    repo: ppa:chrdevs/figma
+  tags:
+    - new
+
+- name: Install Figma
+  apt:
+    name: figma-linux
+    update_cache: yes
+  tags:
+    - new
+
 - name: Update apt cache
   apt: update_cache=yes
   
@@ -38,12 +51,9 @@
       - apt-transport-https
       - build-essential
       - libssl-dev
-    state: present
-
-- name: "Install Archive tools"
-  apt:
-    pkg:
       - unrar
       - p7zip-full
       - p7zip-rar
     state: present
+  tags:
+  - packages

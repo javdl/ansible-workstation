@@ -36,6 +36,14 @@ Test on localhost
     sudo systemctl enable ssh
     sudo systemctl start ssh
 
+## Test new tasks quickly
+
+    sudo ansible-playbook local.yml --tags "new" 
+
+    or 
+
+    sudo ansible-playbook local.yml --skip-tags "packages"
+
 ## 6 months later, restore machine to original state
 
     ansible-playbook -K ~/post_install.yml

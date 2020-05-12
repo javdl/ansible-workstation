@@ -8,4 +8,5 @@
     - eslint
     - linux-window-session-manager
     - sqip
-
+  tags:
+    - packages

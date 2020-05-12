@@ -42,6 +42,7 @@
     - include_tasks: tasks/npm.yml
     - include_tasks: tasks/docker.yml
     - include_tasks: tasks/gnome.yml
+    - include_tasks: tasks/fonts.yml
 
   roles:
     - geerlingguy.nodejs
@@ -59,7 +60,7 @@
           settings:
             - { key: "sidebarVisibility", val: "1" }
             - { key: "dateFormat", val: "YYYY-MM-DD" }
-            - { key: "sync.target", val: "5" }
+            - { key: "sync.target", val: "3" } # (2: File system, 3: OneDrive, 5: Nextcloud, 6: WebDAV, 7: Dropbox) :config sync.target 3 :sync  ALL config values: https://joplinapp.org/terminal/
   # - geerlingguy.pip not yet 20.04
   # - geerlingguy.docker not yet 20.04
 

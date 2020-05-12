@@ -29,6 +29,9 @@
     # cd ~/Downloads/ && wget https://launchpad.net/rapid/pyqt/0.9.19b3/+download/install.py
     # python3 install.py
     - vlc
+  tags:
+  - packages
+
     # - appimagelauncher # sudo add-apt-repository ppa:appimagelauncher-team/stable sudo apt update sudo apt install 
     # cmus c music player: sudo apt-get install libncurses5-dev libncursesw5-dev https://cmus.github.io/#download
 
@@ -44,12 +47,16 @@
     - snapd
     - flatpak
     - gnome-software-plugin-flatpak
+  tags:
+  - packages
 
 - name: Add the Gnome flatpak remote to the system installation
   flatpak_remote:
     name: flathub
     state: present
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+  tags:
+  - packages
 
 ## SNAPS
 
@@ -57,12 +64,16 @@
   snap:
     name:
       - snap-store
+  tags:
+  - packages
 
 - name: Install Deps
   snap:
     name:
       - google-cloud-sdk
     classic: yes
+  tags:
+  - packages
 
 - name: Remove Snaps we replaced with bins
   snap:
@@ -77,24 +88,34 @@
       - postman
     classic: yes
     state: absent
+  tags:
+  - packages
 
   # Install a snap with from a specific channel
 - name: Install "Hugo" with option --channel=extended
   snap:
     name: hugo
     channel: extended
+  tags:
+  - packages
 
 - name: Install gitkraken
   snap:
     name:
       - gitkraken
+  tags:
+  - packages
 
 - name: Install signal-desktop
   snap:
     name:
       - signal-desktop
+  tags:
+  - packages
 
 - name: Install spotify
   snap:
     name:
       - spotify
+  tags:
+  - packages
