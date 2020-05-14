@@ -53,6 +53,10 @@ Test on localhost
 gcloud sdk moet weg uit snap. geeft login problemen bij vs code plugins. beter direct van apt:
 https://cloud.google.com/sdk/docs/downloads-apt-get
 
+GNOME font settings
+
+https://github.com/PeterMosmans/ansible-role-customize-gnome
+
 gcloud init
     
 ## Optional steps
