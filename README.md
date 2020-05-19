@@ -58,6 +58,8 @@ GNOME font settings
 https://github.com/PeterMosmans/ansible-role-customize-gnome
 
 gcloud init
+
+https://extensions.gnome.org/extension/906/sound-output-device-chooser/
     
 ## Optional steps
 
