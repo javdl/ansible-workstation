@@ -60,6 +60,8 @@ https://github.com/PeterMosmans/ansible-role-customize-gnome
 gcloud init
 
 https://extensions.gnome.org/extension/906/sound-output-device-chooser/
+
+OBS open broadcaster https://obsproject.com/wiki/install-instructions#linux
     
 ## Optional steps
 
