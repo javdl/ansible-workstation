@@ -2,10 +2,13 @@
 - name: Include OS-specific variables
   include_vars: "{{ item }}"
   with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
     - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
+    - "{{ ansible_lsb.id }}.yml"
 
-- name: Run OS-specific setup
+- name: Run OS-specific tasks
   include: "{{ item }}"
   with_first_found:
     - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
@@ -13,9 +16,8 @@
 
 - name: Install required System Packages
   package:
-    pkg: "{{ item }}"
+    name: "{{ borg_packages }}"
     state: present
-  with_items: "{{ borg_packages }}"
 
 - name: Update setuptools if needed
   tags: skip_ansible_lint
@@ -28,6 +30,7 @@
   pip:
     name: "{{ borg_python_packages }}"
     executable: "{{ pip_bin }}"
+  when: borg_python_packages is defined
 
 - name: Ensure root has SSH key.
   user:
@@ -37,7 +40,8 @@
     ssh_key_type: ed25519
   register: root_user
 
-- debug:
+- name: Print key created for root user (use for remote repo)
+  debug:
     var: root_user['ssh_public_key']
 
 - name: Create new repository for server
@@ -58,7 +62,14 @@
 
 - name: Set Repository Fact
   set_fact:
-    borg_repository: "{{ repo_creation['data']['repoPath'] }}"
+    borg_repository: |-
+          {% if borg_repository is defined and borg_repository is string %}
+          {{ [borg_repository] + [ repo_creation['data']['repoPath'] ] }}
+          {% elif borg_repository is defined %}
+          {{ borg_repository + [ repo_creation['data']['repoPath'] ] }}
+          {% else %}
+          {{ repo_creation['data']['repoPath'] }}
+          {% endif %}
   when: create_repo
 
 - name: Ensures /etc/borgmatic exists
@@ -75,48 +86,46 @@
     mode: 0600
 
 - name: Add cron-job for borgmatic (large repo, create and check separate)
-  tags: molecule-idempotence-notest
   block:
     - name: Add cron job for regular create and prune
       cron:
-        name: "borgmatic"
-        hour: "{{ 6 |random }}"
-        minute: "{{ 59 |random }}"
+        name: "{{ borgmatic_cron_name }}"
+        hour: "{{ borgmatic_cron_hour }}"
+        minute: "{{ borgmatic_cron_minute }}"
         user: "root"
-        cron_file: borgmatic
+        cron_file: "{{ borgmatic_cron_name }}"
         job: "/usr/local/bin/borgmatic -c /etc/borgmatic/{{ borgmatic_config_name }} --create --prune"
     - name: Add cron job for infrequent checks
       cron:
-        name: "borgmatic-check"
-        day: "{{ 28 | random }}"
-        hour: "{{ range(7, 24) | random }}"
-        minute: "{{ 59 | random }}"
+        name: "{{ borgmatic_cron_name }}-check"
+        day: "{{ borgmatic_cron_checks_day }}"
+        hour: "{{ borgmatic_cron_checks_hour }}"
+        minute: "{{ borgmatic_cron_checks_minute }}"
         user: "root"
-        cron_file: borgmatic
+        cron_file: "{{ borgmatic_cron_name }}"
         job: "/usr/local/bin/borgmatic -c /etc/borgmatic/{{ borgmatic_config_name }} --check"
   when: borgmatic_large_repo
 
 - name: Add cron-job for borgmatic (normal-sized repo)
-  tags: molecule-idempotence-notest
   block:
     - name: Add cron job for create, check and prune
       cron:
-        name: "borgmatic"
-        hour: "{{ 6 | random }}"
-        minute: "{{ 59 | random }}"
+        name: "{{ borgmatic_cron_name }}"
+        hour: "{{ borgmatic_cron_hour }}"
+        minute: "{{ borgmatic_cron_minute }}"
         user: "root"
-        cron_file: borgmatic
+        cron_file: "{{ borgmatic_cron_name }}"
         job: "/usr/local/bin/borgmatic"
     - name: Ensure separate check cron job is absent
       cron:
-        name: "borgmatic-check"
+        name: "{{ borgmatic_cron_name }}-check"
         state: absent
   when: not borgmatic_large_repo
 
 - name: Set PATH for borgmatic cron job.
   cron:
     user: "root"
-    cron_file: borgmatic
+    cron_file: "{{ borgmatic_cron_name }}"
     name: PATH
     env: yes
     value: /usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin

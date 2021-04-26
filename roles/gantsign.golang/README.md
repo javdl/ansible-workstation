@@ -1,7 +1,7 @@
 Ansible Role: Go language SDK
 =============================
 
-[![Build Status](https://travis-ci.org/gantsign/ansible-role-golang.svg?branch=master)](https://travis-ci.org/gantsign/ansible-role-golang)
+[![Tests](https://github.com/gantsign/ansible-role-golang/workflows/Tests/badge.svg)](https://github.com/gantsign/ansible-role-golang/actions?query=workflow%3ATests)
 [![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-gantsign.golang-blue.svg)](https://galaxy.ansible.com/gantsign/golang)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/gantsign/ansible-role-golang/master/LICENSE)
 
@@ -10,7 +10,7 @@ Role to download and install the [Go language SDK](https://golang.org/).
 Requirements
 ------------
 
-* Ansible >= 2.7
+* Ansible >= 2.9
 
 * Linux Distribution
 
@@ -18,8 +18,8 @@ Requirements
 
         * Debian
 
-            * Jessie (8)
             * Stretch (9)
+            * Buster (10)
 
         * Ubuntu
 
@@ -30,8 +30,8 @@ Requirements
 
         * CentOS
 
-            * 6
             * 7
+            * 8
 
         * Fedora
 
@@ -53,7 +53,7 @@ are shown below):
 
 ```yaml
 # Go language SDK version number
-golang_version: '1.14.2'
+golang_version: '1.16.3'
 
 # Mirror to download the Go language SDK redistributable package from
 golang_mirror: 'https://storage.googleapis.com/golang'
@@ -74,9 +74,43 @@ The following versions of Go language SDK are supported without any additional
 configuration (for other versions follow the Advanced Configuration
 instructions):
 
+* `1.16.3`
+* `1.16.2`
+* `1.16.1`
+* `1.16`
+* `1.15.11`
+* `1.15.10`
+* `1.15.9`
+* `1.15.8`
+* `1.15.7`
+* `1.15.6`
+* `1.15.5`
+* `1.15.4`
+* `1.15.3`
+* `1.15.2`
+* `1.15.1`
+* `1.15`
+* `1.14.15`
+* `1.14.14`
+* `1.14.13`
+* `1.14.12`
+* `1.14.11`
+* `1.14.10`
+* `1.14.9`
+* `1.14.8`
+* `1.14.7`
+* `1.14.6`
+* `1.14.5`
+* `1.14.4`
+* `1.14.3`
 * `1.14.2`
 * `1.14.1`
 * `1.14`
+* `1.13.15`
+* `1.13.14`
+* `1.13.13`
+* `1.13.12`
+* `1.13.11`
 * `1.13.10`
 * `1.13.9`
 * `1.13.8`

@@ -1,15 +1,11 @@
 # from galaxy
-- name: geerlingguy.pip
+- name: geerlingguy.dotfiles
 - name: geerlingguy.docker
-- name: geerlingguy.nodejs
-- name: gantsign.visual-studio-code
-- name: gantsign.golang
+# - name: gantsign.visual-studio-code # not for 20.04
+# - name: gantsign.golang # not for 20.04
 - name: pixelart.chrome
-- name: chaosmail.sublime-text
-- name: gantsign.postman
-- name: m3nu.ansible_role_borgbackup
-- name: andrewrothstein.kubectl
-- name: andrewrothstein.terraform
-- src: https://github.com/Joostvanderlaan/ansible-role-joplin.git
-  scm: git
-  name: joplin
+# - name: chaosmail.sublime-text # not for 20.04
+# - name: gantsign.postman # not for 20.04
+# - name: m3nu.ansible_role_borgbackup # by borgbase :)
+# - name: andrewrothstein.kubectl # not for 20.04 ??
+# - name: andrewrothstein.terraform # not for 20.04 ??

@@ -2,7 +2,7 @@
 
 ---
 
-- hosts: localhost
+# - hosts: localhost
 
   tasks:
     - file:

@@ -1,0 +1,72 @@
+---
+
+# - import_playbook: install-roles.yml
+
+- hosts: all
+
+  vars_files:
+    - default.config.yml
+
+  pre_tasks:
+    - include_vars: "{{ item }}"
+      with_fileglob:
+        - "{{ playbook_dir }}/config.yml"
+      tags: ['always']
+
+  roles:
+    - role: geerlingguy.dotfiles
+      when: configure_dotfiles
+      tags: ['dotfiles']
+    - geerlingguy.docker
+    - pixelart.chrome
+    # - m3nu.ansible_role_borgbackup
+
+  tasks:
+    - name: Run configured post-provision ansible task files.
+      include_tasks: "{{ outer_item }}"
+      loop_control:
+        loop_var: outer_item
+      with_fileglob: "{{ post_provision_tasks|default(omit) }}"
+    
+
+   
+    # - geerlingguy.nodejs # FOR SERVERS ONLY!
+
+    # - role: joplin
+    #   users:
+    #     - username: joost
+    #       settings:
+    #         - { key: "sidebarVisibility", val: "1" }
+    #         - { key: "dateFormat", val: "YYYY-MM-DD" }
+            # - { key: "sync.target", val: "3" } # (2: File system, 3: OneDrive, 5: Nextcloud, 6: WebDAV, 7: Dropbox) :config sync.target 3 :sync  ALL config values: https://joplinapp.org/terminal/
+
+  # - { role: dotfiles }
+
+  # - role: stephdewit.nvm
+  #   nvm_version: HEAD
+
+
+
+  # become: true
+  # pre_tasks:
+  #   - name: update repositories
+  #     apt: update_cache=yes
+  #     changed_when: False
+  # vars:
+
+
+  tasks:
+    - include_tasks: tasks/homebrew.yml
+      tags: ['homebrew']
+    - include_tasks: tasks/users.yml
+    - include_tasks: tasks/cron.yml
+    - include_tasks: tasks/common.yml
+    - include_tasks: tasks/VPN-SSH.yml
+    - include_tasks: tasks/packages.yml
+    - include_tasks: tasks/npm.yml
+    - include_tasks: tasks/docker.yml
+    - include_tasks: tasks/gnome.yml
+    - include_tasks: tasks/fonts.yml
+
+  # roles:
+    

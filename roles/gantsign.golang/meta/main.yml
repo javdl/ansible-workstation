@@ -4,20 +4,20 @@ galaxy_info:
   description: Role for installing the Go language SDK.
   company: GantSign Ltd.
   license: MIT
-  min_ansible_version: 2.7
+  min_ansible_version: 2.9
   platforms:
     - name: EL
       versions:
-        - 6
         - 7
+        - 8
     - name: Ubuntu
       versions:
         - xenial
         - bionic
     - name: Debian
       versions:
+        - buster
         - stretch
-        - jessie
     - name: Fedora
       versions:
         - 31
