@@ -1,11 +1,19 @@
-# ansible-workstation
+# Ansible workstation
+
+A Linux workstation setup that is automated and easily repeated on a new machine to get exactly all the developer tools, music players etc. etc. that I want.
 
 ## Install
+
+### Install Ansible
 
     sudo apt-get install software-properties-common git
     sudo apt-add-repository ppa:ansible/ansible
     sudo apt-get update
     sudo apt-get install ansible
+
+### Install Brew (Linuxbrew)
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 ## Quick start
 
