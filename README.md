@@ -2,42 +2,35 @@
 
 A Linux workstation setup that is automated and easily repeated on a new machine to get exactly all the developer tools, music players etc. etc. that I want.
 
+This, [but for MacOS](https://github.com/Joostvanderlaan/mac-dev-playbook)
+
 ## Install Ansible
 
-### With Brew
+[Official docs](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu)
 
-    brew install ansible
+    sudo apt-get install software-properties-common git
+    sudo apt-add-repository ppa:ansible/ansible
+    sudo apt-get update
+    sudo apt-get install ansible
 
-#### Install Brew (Linuxbrew)
+### Install Brew (Linuxbrew)
+
+We need Brew installed as we use it in our Ansible scripts.
 
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     
 Don't forget to add to **PATH** using the commands you see after brew install has finished.
 Also, `source ~/.profile` to make it work in your already-open terminal.
 
+Example:
+
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/joost/.profile
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 Recommended:
     
     sudo apt-get install build-essential
     brew install gcc
-
-#### Add to PATH for sudo
-
-To make brew work for sudo as well, we need to add it to the profile for the sudo user too. Otherwise commands like `sudo ansible` will not work.
-
-    sudo su
-    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-    test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-    echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-
-### With APT
-
-You can also install Ansible with APT (of course)
-
-    sudo apt-get install software-properties-common git
-    sudo apt-add-repository ppa:ansible/ansible
-    sudo apt-get update
-    sudo apt-get install ansible
 
 ## Quick start
 
