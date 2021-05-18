@@ -12,7 +12,8 @@ A Linux workstation setup that is automated and easily repeated on a new machine
 
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     
-Don't forget to add to **PATH**
+Don't forget to add to **PATH** using the commands you see after brew install has finished.
+Also, `source ~/.profile` to make it work in your already-open terminal.
 
 Recommended:
     
