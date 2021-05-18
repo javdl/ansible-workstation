@@ -20,6 +20,14 @@ Recommended:
     sudo apt-get install build-essential
     brew install gcc
 
+To make brew work for sudo as well, we need to add it to the profile for the sudo user too. Otherwise commands like `sudo ansible` will not work.
+
+    sudo su
+    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+    test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+    echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+
 ### With APT
 
 You can also install Ansible with APT (of course)
