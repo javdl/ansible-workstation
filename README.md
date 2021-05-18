@@ -11,6 +11,10 @@ A Linux workstation setup that is automated and easily repeated on a new machine
     sudo apt-get update
     sudo apt-get install ansible
 
+You can also install Ansible with Brew
+
+    brew install ansible
+
 ### Install Brew (Linuxbrew)
 
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
