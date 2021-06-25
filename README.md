@@ -2,7 +2,7 @@
 
 A Linux workstation setup that is automated and easily repeated on a new machine to get exactly all the developer tools, music players etc. etc. that I want.
 
-This, but [for MacOS](https://github.com/Joostvanderlaan/mac-dev-playbook)
+[For MacOS, check this repo.](https://github.com/Joostvanderlaan/mac-dev-playbook)
 
 ## Install Ansible
 
