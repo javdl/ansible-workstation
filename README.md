@@ -1,4 +1,4 @@
-# Ansible workstation
+# Ansible Linux (Ubuntu,Debian) workstation
 
 A Linux workstation setup that is automated and easily repeated on a new machine to get exactly all the developer tools, music players etc. etc. that I want.
 
