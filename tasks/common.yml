@@ -7,6 +7,7 @@
 - name: Figma
   apt_repository:
     repo: ppa:chrdevs/figma
+    state: absent
   tags:
     - new
 
@@ -14,6 +15,7 @@
   apt:
     name: figma-linux
     update_cache: yes
+    state: absent
   tags:
     - new
 

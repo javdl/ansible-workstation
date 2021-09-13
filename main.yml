@@ -56,17 +56,24 @@
 
 
   tasks:
-    - include_tasks: tasks/homebrew.yml
-      tags: ['homebrew']
     - include_tasks: tasks/users.yml
+      tags: ['users:']
     - include_tasks: tasks/cron.yml
+      tags: ['cron']
     - include_tasks: tasks/common.yml
+      tags: ['common']
     - include_tasks: tasks/VPN-SSH.yml
+      tags: ['vpn']
     - include_tasks: tasks/packages.yml
+      tags: ['packages']
     - include_tasks: tasks/npm.yml
+      tags: ['npm']
     - include_tasks: tasks/docker.yml
+      tags: ['docker']
     - include_tasks: tasks/gnome.yml
+      tags: ['gnome']
     - include_tasks: tasks/fonts.yml
+      tags: ['fonts']
 
   # roles:
     

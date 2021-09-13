@@ -27,9 +27,9 @@ Install requirements
 
     sudo ansible-galaxy install -r requirements.yml
 
-Test on localhost
+Run on localhost
 
-    sudo ansible-playbook local.yml
+    sudo ansible-playbook main.yml -i inventory
 
 ## Create a role:
 
@@ -44,11 +44,11 @@ Test on localhost
 
 ## Test new tasks quickly
 
-    sudo ansible-playbook local.yml --tags "new" 
+    sudo ansible-playbook main.yml -i inventory --tags "new" 
 
     or 
 
-    sudo ansible-playbook local.yml --skip-tags "packages"
+    sudo ansible-playbook main.yml -i inventory --skip-tags "packages"
 
 ## 6 months later, restore machine to original state
 

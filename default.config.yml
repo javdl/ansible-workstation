@@ -64,7 +64,7 @@ dotfiles_files:
 
 # # Install packages from other package managers.
 # # Note: You are responsible for making sure the required package managers are
-# # installed, eg. through homebrew.
+# # installed, e.g. use NVM to install NPM, etc.
 # composer_packages: []
 # # - name: drush
 # #   state: present # present/absent, default: present
