@@ -1,20 +1,44 @@
 - name: Install packages
   apt: name={{item}} state=latest
   with_items:
+    # - autoconf
     - htop
     - mc
     - tmux
     - zsh
     - net-tools
-    - steam-installer
+    - steam
+    - bash-completion
     - calibre
+    # - gettext
     - gimp # (photoshop)
     - gimp-data
     - gimp-plugin-registry
     - gimp-data-extras
-    - emacs
+    # - gifsicle
+    - git
+    - go
+    - gpg
+    - glab
+    - google-chrome-stable
+    - hugo
+    - jq
+    # - emacs
     - erlang
+    - mcrypt
+    - mpd
+    - mopidy
+    - mopidy-spotify
+    - mopidy-beets
+    - mopidy-soundcloud
+    - nethogs
+    - ncmpcpp
     - nfs-common
+    - openssl
+    - p7zip
+    - readline
+    # - nvm
+    # - pandoc
     # - insync
     - chrome-gnome-shell
     - inkscape # (illustrator) ppa:inkscape.dev/stable
@@ -24,7 +48,10 @@
     - exfat-utils
     - digikam
     - webp # used for Hugo Theme / manual image creation
+    - wget
     - imagemagick
+    - sqlite
+    - tmux
     # - rapid photo downloader https://www.damonlynch.net/rapid/download.html
     # cd ~/Downloads/ && wget https://launchpad.net/rapid/pyqt/0.9.19b3/+download/install.py
     # python3 install.py

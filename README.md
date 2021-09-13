@@ -13,25 +13,6 @@ A Linux workstation setup that is automated and easily repeated on a new machine
     sudo apt-get update
     sudo apt-get install ansible
 
-### Install Brew (Linuxbrew)
-
-We need Brew installed as we use it in our Ansible scripts.
-
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    
-Don't forget to add to **PATH** using the commands you see after brew install has finished.
-Also, `source ~/.profile` to make it work in your already-open terminal.
-
-Example:
-
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/joost/.profile
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-Recommended:
-    
-    sudo apt-get install build-essential
-    brew install gcc
-
 ## Quick start
 
 Run as sudo, we are changing the system.
